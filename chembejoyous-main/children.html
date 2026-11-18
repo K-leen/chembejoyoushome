@@ -63,14 +63,18 @@
   /* GALLERY */
   .gallery-section { background: var(--sky); padding: 5rem 2rem; }
   .gallery-section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--text); text-align: center; margin-bottom: 2.5rem; }
-  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 1100px; margin: 0 auto; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: clamp(150px, 18vw, 220px); gap: 1rem; max-width: 1100px; margin: 0 auto; }
   .gallery-cell {
-    border-radius: 14px; display: flex; align-items: center;
-    justify-content: center; font-size: 3.5rem;
-    border: 2px solid rgba(244,167,36,0.3); transition: transform 0.2s;
-    cursor: pointer; position: relative; overflow: hidden;
+    min-width: 0; min-height: 0; border-radius: 14px;
+    border: 2px solid rgba(244,167,36,0.3);
+    position: relative; overflow: hidden;
   }
-  .gallery-cell:hover { transform: scale(1.05); }
+  .gallery-cell img {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    transition: transform 0.3s ease;
+  }
+  .gallery-cell:hover img, .gallery-cell:focus-within img { transform: scale(1.04); }
   .gallery-cell.tall { grid-row: span 2; }
   .gallery-cell .caption {
     position: absolute; bottom: 0; left: 0; right: 0;
@@ -78,13 +82,13 @@
     font-size: 0.75rem; padding: 0.5rem; text-align: center;
     font-weight: 600; opacity: 0; transition: opacity 0.2s;
   }
-  .gallery-cell:hover .caption { opacity: 1; }
-  .g1 { background: #FAE8D4; min-height: 160px; }
-  .g2 { background: #E8F4F0; min-height: 160px; }
-  .g3 { background: #EAF0F8; min-height: 160px; }
-  .g4 { background: #F8EAF0; min-height: 160px; }
-  .g5 { background: #F4F0E8; min-height: 160px; }
-  .g6 { background: #EAF4E8; min-height: 160px; }
+  .gallery-cell:hover .caption, .gallery-cell:focus-within .caption { opacity: 1; }
+  .g1 { background: #FAE8D4; }
+  .g2 { background: #E8F4F0; }
+  .g3 { background: #EAF0F8; }
+  .g4 { background: #F8EAF0; }
+  .g5 { background: #F4F0E8; }
+  .g6 { background: #EAF4E8; }
 
   /* QUOTE WALL */
   .voices { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
@@ -107,10 +111,14 @@
 
   @media (max-width: 768px) {
     .profiles-grid { grid-template-columns: 1fr; }
-    .gallery-grid { grid-template-columns: repeat(2,1fr); }
+    .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .gallery-cell .caption { opacity: 1; }
     .voices-grid { grid-template-columns: 1fr; }
     .page-hero h1 { font-size: 2rem; }
     nav ul { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-cell img, .gallery-cell .caption { transition: none; }
   }
 </style>
 </head>
@@ -143,7 +151,7 @@
   <p>Every child here is known by name, loved without condition, and seen as a future leader of Kenya.</p>
   <div class="profiles-grid">
     <div class="profile-card">
-      <div class="profile-banner orange">🧒🏾<div class="age-badge">Age 9</div></div>
+      <div class="profile-banner orange"><div class="age-badge">Age 9</div></div>
       <div class="profile-body">
         <h3>Bryton</h3>
         <div class="profile-dream">🌟 Wants to be a doctor</div>
@@ -152,7 +160,7 @@
       </div>
     </div>
     <div class="profile-card">
-      <div class="profile-banner green">👦🏿<div class="age-badge">Age 12</div></div>
+      <div class="profile-banner green"><div class="age-badge">Age 12</div></div>
       <div class="profile-body">
         <h3>Ibrahim</h3>
         <div class="profile-dream">🎨 Wants to be an artist</div>
@@ -161,7 +169,7 @@
       </div>
     </div>
     <div class="profile-card">
-      <div class="profile-banner blue">👧🏽<div class="age-badge">Age 7</div></div>
+      <div class="profile-banner blue"><div class="age-badge">Age 7</div></div>
       <div class="profile-body">
         <h3>Faiza</h3>
         <div class="profile-dream">✈️ Wants to travel the world</div>
@@ -170,7 +178,7 @@
       </div>
     </div>
     <div class="profile-card">
-      <div class="profile-banner pink">🧒🏾<div class="age-badge">Age 15</div></div>
+      <div class="profile-banner pink"><div class="age-badge">Age 15</div></div>
       <div class="profile-body">
         <h3>Joseph</h3>
         <div class="profile-dream">💻 Wants to be an engineer</div>
@@ -179,7 +187,7 @@
       </div>
     </div>
     <div class="profile-card">
-      <div class="profile-banner orange">👧🏿<div class="age-badge">Age 11</div></div>
+      <div class="profile-banner orange"><div class="age-badge">Age 11</div></div>
       <div class="profile-body">
         <h3>Zawadi</h3>
         <div class="profile-dream">📖 Wants to be a teacher</div>
@@ -188,7 +196,7 @@
       </div>
     </div>
     <div class="profile-card">
-      <div class="profile-banner green">🧒🏽<div class="age-badge">Age 14</div></div>
+      <div class="profile-banner green"><div class="age-badge">Age 14</div></div>
       <div class="profile-body">
         <h3>Baraka</h3>
         <div class="profile-dream">⚽ Wants to play for Kenya</div>
@@ -206,7 +214,7 @@
     <div class="gallery-cell g1 tall">
       <img src="images/l.jpg"alt="Spending time together"><div class="caption">Spending time together</div></div>
     <div class="gallery-cell g2">
-      <img src="images/book.jpg" alt="Learning time"><div class="caption">Learning time</div></div>
+      <img src="images/books.jpg" alt="Learning time"><div class="caption">Learning time</div></div>
     <div class="gallery-cell g3">
       <img src="images/ball.jpg"alt="Afternoon Ball"><div class="caption">Afternoon football</div></div>
     <div class="gallery-cell g4">
